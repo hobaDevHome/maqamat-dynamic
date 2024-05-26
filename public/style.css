@@ -1,0 +1,21 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 50px;
+}
+
+#controls {
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  font-size: 16px;
+}
+
+#sound-name {
+  font-size: 18px;
+  color: #333;
+  margin-top: 20px;
+}
