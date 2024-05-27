@@ -8,7 +8,7 @@ const port = 3000;
 app.use(express.static("public"));
 
 function getAllFiles(dirPath, arrayOfFiles) {
-  files = fs.readdirSync(dirPath);
+  const files = fs.readdirSync(dirPath);
 
   arrayOfFiles = arrayOfFiles || [];
 
@@ -27,10 +27,23 @@ function getAllFiles(dirPath, arrayOfFiles) {
   return arrayOfFiles;
 }
 
+function getFolders(dirPath) {
+  const files = fs.readdirSync(dirPath);
+  return files.filter((file) =>
+    fs.statSync(path.join(dirPath, file)).isDirectory()
+  );
+}
+
 app.get("/sounds", (req, res) => {
   const soundsDir = path.join(__dirname, "public/sounds");
   const mp3Files = getAllFiles(soundsDir);
   res.json(mp3Files);
+});
+
+app.get("/folders", (req, res) => {
+  const soundsDir = path.join(__dirname, "public/sounds");
+  const folders = getFolders(soundsDir);
+  res.json(folders);
 });
 
 app.listen(port, () => {
