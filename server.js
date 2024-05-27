@@ -7,15 +7,30 @@ const port = 3000;
 
 app.use(express.static("public"));
 
+function getAllFiles(dirPath, arrayOfFiles) {
+  files = fs.readdirSync(dirPath);
+
+  arrayOfFiles = arrayOfFiles || [];
+
+  files.forEach((file) => {
+    if (fs.statSync(dirPath + "/" + file).isDirectory()) {
+      arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles);
+    } else {
+      if (path.extname(file) === ".mp3") {
+        arrayOfFiles.push(
+          path.join(path.relative("public/sounds", dirPath), file)
+        );
+      }
+    }
+  });
+
+  return arrayOfFiles;
+}
+
 app.get("/sounds", (req, res) => {
   const soundsDir = path.join(__dirname, "public/sounds");
-  fs.readdir(soundsDir, (err, files) => {
-    if (err) {
-      return res.status(500).send("Unable to scan directory");
-    }
-    const mp3Files = files.filter((file) => path.extname(file) === ".mp3");
-    res.json(mp3Files);
-  });
+  const mp3Files = getAllFiles(soundsDir);
+  res.json(mp3Files);
 });
 
 app.listen(port, () => {
