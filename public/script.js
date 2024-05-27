@@ -78,10 +78,14 @@ document.getElementById("reset").addEventListener("click", () => {
   score = 0;
   totalQuestions = 0;
   correctAnswers = 0;
-  document.getElementById("score").innerText = "Score: 0";
-  document.getElementById("result").innerText =
-    "0 correct answers out of 0 questions";
+
+  document.getElementById("result").innerText = "0  / 0 ";
   document.getElementById("sound-name").innerText = "";
+  if (currentSound) {
+    stopSound(currentSound);
+  } else {
+    console.error("No sound to stop");
+  }
 });
 
 // Play the sound
@@ -92,6 +96,14 @@ function playSound(sound) {
   }
   audio = new Audio(`sounds/${sound}`);
   audio.play();
+}
+
+function stopSound(sound) {
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+  audio = null;
 }
 
 // Update result display
