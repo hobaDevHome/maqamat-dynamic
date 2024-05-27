@@ -30,9 +30,9 @@ fetch("/folders")
           correctAnswers++;
           score++;
         }
-        document.getElementById("sound-name").innerText = `Sound: ${currentSound
-          .split(/[/\\]/)
-          .pop()} from folder: ${currentSoundFolder}`;
+        document.getElementById(
+          "sound-name"
+        ).innerText = `${currentSoundFolder}`;
         updateResult();
       }
     });
@@ -96,8 +96,7 @@ function playSound(sound) {
 
 // Update result display
 function updateResult() {
-  document.getElementById("score").innerText = `Score: ${score}`;
   document.getElementById(
     "result"
-  ).innerText = `${correctAnswers} correct answers out of ${totalQuestions} questions`;
+  ).innerText = `${correctAnswers} / ${totalQuestions}`;
 }
