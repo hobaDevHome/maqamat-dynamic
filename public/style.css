@@ -54,16 +54,17 @@ select {
 }
 
 .sound-name,
-.score,
 .result {
   margin: 10px 0;
-  font-size: 1.2em;
+  font-size: 2em;
+  color: green;
+  text-transform: capitalize;
 }
 
 .folder-results {
-  margin-top: 20px;
+  margin-top: 1%;
   text-align: left;
-  font-size: 1em;
+  font-size: 1.2em;
 }
 
 #folder-select {
@@ -74,4 +75,11 @@ select {
 .option-item {
   padding-top: 10px;
   border-bottom: 1px solid gray;
+}
+
+.folder-result-line {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid gray;
+  text-transform: capitalize;
 }

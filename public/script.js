@@ -115,6 +115,7 @@ function updateStats() {
     const stats = folderStats[folder];
     const result = document.createElement("div");
     result.innerText = `${folder} : ${stats.correct}  /  ${stats.total} `;
+    result.classList.add("folder-result-line");
     folderResults.appendChild(result);
   }
 }
