@@ -8,16 +8,24 @@
   </head>
   <body>
     <div class="container">
-      <button id="play">Play</button>
-      <button id="replay">Replay</button>
-      <button id="reset">Reset</button>
-      <select id="folder-select">
-        <option value="" disabled selected>Select folder</option>
-      </select>
+      <img
+        src="https://cdn.alweb.com/thumbs/almoseqa/article/fit710x532/%D8%A2%D9%84%D8%A9-%D8%A7%D9%84%D8%B9%D9%88%D8%AF-%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE%D9%87%D8%A7-%D9%88%D9%85%D9%83%D9%88%D9%86%D8%A7%D8%AA%D9%87%D8%A7-%D9%88%D8%A3%D9%83%D8%AB%D8%B1.jpg"
+        alt="Arabic Oud"
+        class="oud-image"
+      />
+      <div class="controls">
+        <button id="play">Play</button>
+        <button id="replay">Replay</button>
+        <button id="reset">Reset</button>
+        <select id="folder-select">
+          <option value="" disabled selected class="option-item">Maqam</option>
+        </select>
+      </div>
       <div id="sound-name" class="sound-name"></div>
 
-      <div id="result">0 / 0</div>
+      <div id="result" class="result">0 / 0</div>
+      <div id="folder-results" class="folder-results"></div>
     </div>
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
   </body>
 </html>

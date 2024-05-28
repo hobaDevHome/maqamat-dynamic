@@ -5,6 +5,7 @@ let audio = null;
 let score = 0;
 let totalQuestions = 0;
 let correctAnswers = 0;
+let folderStats = {};
 
 // Fetch folders and populate the dropdown
 fetch("/folders")
@@ -15,26 +16,11 @@ fetch("/folders")
       const option = document.createElement("option");
       option.value = folder;
       option.text = folder;
+      option.classList.add("option-item");
       folderSelect.add(option);
-    });
 
-    // Add event listener for folder selection change
-    folderSelect.addEventListener("change", () => {
-      if (currentSound) {
-        totalQuestions++;
-        const selectedFolder = folderSelect.value;
-        console.log("Selected folder:", selectedFolder); // Debugging log
-        console.log("Current sound folder:", currentSoundFolder); // Debugging log
-
-        if (selectedFolder === currentSoundFolder) {
-          correctAnswers++;
-          score++;
-        }
-        document.getElementById(
-          "sound-name"
-        ).innerText = `${currentSoundFolder}`;
-        updateResult();
-      }
+      // Initialize folder stats
+      folderStats[folder] = { correct: 0, total: 0 };
     });
   })
   .catch((error) => console.error("Error fetching folders:", error));
@@ -54,11 +40,14 @@ document.getElementById("play").addEventListener("click", () => {
     currentSound = sounds[randomIndex];
     let parts = currentSound.split(/[/\\]/); // Handle both forward and backward slashes
     currentSoundFolder = parts[0]; // Extracting the first subfolder
-    console.log("Playing sound:", currentSound); // Debugging log
-    console.log("Sound folder:", currentSoundFolder); // Debugging log
     playSound(currentSound);
     document.getElementById("sound-name").innerText = ""; // Resetting the display
-    document.getElementById("folder-select").value = "";
+
+    // Reset dropdown menu
+
+    const folderSelect = document.getElementById("folder-select");
+    folderSelect.value = "";
+    folderSelect.disabled = false;
   } else {
     console.error("No sounds available");
   }
@@ -73,19 +62,35 @@ document.getElementById("replay").addEventListener("click", () => {
   }
 });
 
+// Handle folder selection and check answer
+document.getElementById("folder-select").addEventListener("change", (event) => {
+  const selectedFolder = event.target.value;
+  if (currentSoundFolder) {
+    totalQuestions++;
+    folderStats[selectedFolder].total++;
+    if (selectedFolder === currentSoundFolder) {
+      correctAnswers++;
+      folderStats[selectedFolder].correct++;
+    }
+    updateStats();
+    document.getElementById("sound-name").innerText = `${currentSoundFolder}`;
+    event.target.disabled = true;
+  }
+});
+
 // Reset the game
 document.getElementById("reset").addEventListener("click", () => {
   score = 0;
   totalQuestions = 0;
   correctAnswers = 0;
-
-  document.getElementById("result").innerText = "0  / 0 ";
-  document.getElementById("sound-name").innerText = "";
-  if (currentSound) {
-    stopSound(currentSound);
-  } else {
-    console.error("No sound to stop");
+  for (let folder in folderStats) {
+    folderStats[folder].correct = 0;
+    folderStats[folder].total = 0;
   }
+  document.getElementById("score").innerText = "Score: 0";
+  document.getElementById("result").innerText = "0  / 0 ";
+  document.getElementById("folder-results").innerHTML = "";
+  document.getElementById("sound-name").innerText = "";
 });
 
 // Play the sound
@@ -98,17 +103,18 @@ function playSound(sound) {
   audio.play();
 }
 
-function stopSound(sound) {
-  if (audio) {
-    audio.pause();
-    audio.currentTime = 0;
-  }
-  audio = null;
-}
-
-// Update result display
-function updateResult() {
+// Update stats display
+function updateStats() {
   document.getElementById(
     "result"
-  ).innerText = `${correctAnswers} / ${totalQuestions}`;
+  ).innerText = `${correctAnswers} / ${totalQuestions} `;
+
+  const folderResults = document.getElementById("folder-results");
+  folderResults.innerHTML = "";
+  for (let folder in folderStats) {
+    const stats = folderStats[folder];
+    const result = document.createElement("div");
+    result.innerText = `${folder} : ${stats.correct}  /  ${stats.total} `;
+    folderResults.appendChild(result);
+  }
 }
