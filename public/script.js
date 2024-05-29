@@ -80,17 +80,19 @@ document.getElementById("folder-select").addEventListener("change", (event) => {
 
 // Reset the game
 document.getElementById("reset").addEventListener("click", () => {
-  score = 0;
   totalQuestions = 0;
   correctAnswers = 0;
   for (let folder in folderStats) {
     folderStats[folder].correct = 0;
     folderStats[folder].total = 0;
   }
-  document.getElementById("score").innerText = "Score: 0";
+
   document.getElementById("result").innerText = "0  / 0 ";
   document.getElementById("folder-results").innerHTML = "";
-  document.getElementById("sound-name").innerText = "";
+  document.getElementById("sound-name").innerHTML = "";
+  if (currentSound) {
+    stopSound(currentSound);
+  }
 });
 
 // Play the sound
@@ -101,6 +103,14 @@ function playSound(sound) {
   }
   audio = new Audio(`sounds/${sound}`);
   audio.play();
+}
+
+function stopSound(sound) {
+  console.log("sotp");
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
 }
 
 // Update stats display
