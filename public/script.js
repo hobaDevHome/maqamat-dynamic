@@ -41,7 +41,7 @@ document.getElementById("play").addEventListener("click", () => {
     let parts = currentSound.split(/[/\\]/); // Handle both forward and backward slashes
     currentSoundFolder = parts[0]; // Extracting the first subfolder
     playSound(currentSound);
-    document.getElementById("sound-name").innerText = ""; // Resetting the display
+    document.getElementById("sound-name").innerText = "Maqam:"; // Resetting the display
 
     // Reset dropdown menu
 
@@ -73,7 +73,9 @@ document.getElementById("folder-select").addEventListener("change", (event) => {
       folderStats[selectedFolder].correct++;
     }
     updateStats();
-    document.getElementById("sound-name").innerText = `${currentSoundFolder}`;
+    document.getElementById(
+      "sound-name"
+    ).innerText = `Maqam: ${currentSoundFolder}`;
     event.target.disabled = true;
   }
 });
@@ -89,7 +91,7 @@ document.getElementById("reset").addEventListener("click", () => {
 
   document.getElementById("result").innerText = "0  / 0 ";
   document.getElementById("folder-results").innerHTML = "";
-  document.getElementById("sound-name").innerHTML = "";
+  document.getElementById("sound-name").innerHTML = "Maqam:";
   if (currentSound) {
     stopSound(currentSound);
   }
