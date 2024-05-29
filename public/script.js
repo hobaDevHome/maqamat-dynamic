@@ -8,7 +8,7 @@ let correctAnswers = 0;
 let folderStats = {};
 
 // Fetch folders and populate the dropdown
-fetch("/folders")
+fetch("/api/folders")
   .then((response) => response.json())
   .then((folders) => {
     const folderSelect = document.getElementById("folder-select");
@@ -26,7 +26,7 @@ fetch("/folders")
   .catch((error) => console.error("Error fetching folders:", error));
 
 // Fetch sounds
-fetch("/sounds")
+fetch("/api/sounds")
   .then((response) => response.json())
   .then((data) => {
     sounds = data;
