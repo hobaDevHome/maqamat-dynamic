@@ -1,3 +1,4 @@
+// @ts-nocheck
 let sounds = [];
 let currentSound = null;
 let currentSoundFolder = null;
@@ -67,10 +68,10 @@ document.getElementById("folder-select").addEventListener("change", (event) => {
   const selectedFolder = event.target.value;
   if (currentSoundFolder) {
     totalQuestions++;
-    folderStats[selectedFolder].total++;
+    folderStats[currentSoundFolder].total++;
     if (selectedFolder === currentSoundFolder) {
       correctAnswers++;
-      folderStats[selectedFolder].correct++;
+      folderStats[currentSoundFolder].correct++;
     }
     updateStats();
     document.getElementById(
@@ -89,7 +90,7 @@ document.getElementById("reset").addEventListener("click", () => {
     folderStats[folder].total = 0;
   }
 
-  document.getElementById("result").innerText = "0  / 0 ";
+  document.getElementById("result").innerText = "Total Score: 0  / 0 ";
   document.getElementById("folder-results").innerHTML = "";
   document.getElementById("sound-name").innerHTML = "Maqam:";
   if (currentSound) {
@@ -119,7 +120,7 @@ function stopSound(sound) {
 function updateStats() {
   document.getElementById(
     "result"
-  ).innerText = `${correctAnswers} / ${totalQuestions} `;
+  ).innerText = `Total Score: ${correctAnswers} / ${totalQuestions} `;
 
   const folderResults = document.getElementById("folder-results");
   folderResults.innerHTML = "";
