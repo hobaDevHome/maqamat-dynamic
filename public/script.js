@@ -72,6 +72,9 @@ document.getElementById("folder-select").addEventListener("change", (event) => {
       correctAnswers++;
       folderStats[selectedFolder].correct++;
     }
+    if (currentSound) {
+      stopSound(currentSound);
+    }
     updateStats();
     document.getElementById(
       "sound-name"
