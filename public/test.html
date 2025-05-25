@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Menu</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .menu {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #333;
+        padding: 10px;
+        transition: all 0.3s ease;
+      }
+      .menu a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        transition: background-color 0.3s ease;
+        font-size: 1em;
+      }
+      .menu a:hover {
+        background-color: #575757;
+      }
+      @media (max-width: 600px) {
+        .menu a {
+          padding: 5px 10px;
+          font-size: 0.8em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </body>
+</html>

@@ -4,16 +4,14 @@ const fs = require("fs");
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware to serve static files
+// Serve static files
 app.use(express.static(path.join(__dirname, "../public")));
 
-// API endpoint to get sound folders
+// API to get folders
 app.get("/api/folders", (req, res) => {
   const soundsPath = path.join(__dirname, "../public/sounds");
   fs.readdir(soundsPath, { withFileTypes: true }, (err, files) => {
-    if (err) {
-      return res.status(500).send("Error reading folders");
-    }
+    if (err) return res.status(500).send("Error reading folders");
     const folders = files
       .filter((dirent) => dirent.isDirectory())
       .map((dirent) => dirent.name);
@@ -21,7 +19,17 @@ app.get("/api/folders", (req, res) => {
   });
 });
 
-// API endpoint to get sound files
+// ✅ نقلنا ده برا
+app.get("/api/maqam-keys", (req, res) => {
+  const keysPath = path.join(__dirname, "../public/maqam-keys");
+  fs.readdir(keysPath, (err, files) => {
+    if (err) return res.status(500).send("Error reading maqam keys folder");
+    const mp3Files = files.filter((file) => file.endsWith(".mp3"));
+    res.json(mp3Files);
+  });
+});
+
+// API to get all mp3s
 app.get("/api/sounds", (req, res) => {
   const soundsPath = path.join(__dirname, "../public/sounds");
   const soundFiles = [];
@@ -45,7 +53,7 @@ app.get("/api/sounds", (req, res) => {
   res.json(soundFiles);
 });
 
-// Serve the frontend
+// Serve frontend
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/index.html"));
 });

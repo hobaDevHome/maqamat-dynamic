@@ -135,3 +135,36 @@ function updateStats() {
     folderResults.appendChild(result);
   }
 }
+
+// Fetch maqam keys and create buttons
+fetch("/api/maqam-keys")
+  .then((response) => response.json())
+  .then((keys) => {
+    const container = document.getElementById("keys-container");
+
+    keys.forEach((keyFile) => {
+      const button = document.createElement("button");
+      const name = keyFile.replace(".mp3", ""); // remove extension for label
+      button.innerText = name;
+      button.classList.add("maqam-key-button");
+
+      button.addEventListener("click", () => {
+        playMaqamKey(name);
+      });
+
+      container.appendChild(button);
+    });
+  })
+  .catch((error) => console.error("Error fetching maqam keys:", error));
+
+// Function to play a maqam key
+function playMaqamKey(name) {
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+  audio = new Audio(`maqam-keys/${name}.mp3`);
+  audio.play();
+}
+
+/////////////////////
